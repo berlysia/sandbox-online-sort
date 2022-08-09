@@ -1,4 +1,6 @@
-export function sort<T>(arr: T[]): T[] {
+type Comparator<T> = (a: T, b: T) => -1 | 0 | 1;
+
+export function sort<T>(arr: T[], cmp: Comparator<T>): T[] {
   function merge(left: T[], right: T[]) {
     const result: T[] = [];
     while (left.length > 0 || right.length> 0) {
@@ -12,7 +14,7 @@ export function sort<T>(arr: T[]): T[] {
       }
       const lh = left[0];
       const rh = right[0];
-      if (lh < rh) {
+      if (cmp(lh, rh) < 0) {
         result.push(left.shift()!);
       } else {
         result.push(right.shift()!);
